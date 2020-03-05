@@ -1,0 +1,27 @@
+name: CI
+
+on: [push, pull_request]
+
+jobs:
+  tests:
+
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v2
+      - name: "Install PHP with extensions"
+        uses: shivammathur/setup-php@v1
+        with:
+          php-version: '7.4'
+          coverage: xdebug
+          extensions: xdebug, intl, pdo_mysql, pdo
+      - name: Install composer
+        run: curl --show-error --silent https://getcomposer.org/installer | php
+      - name: Install composer dependencies
+        run: php composer.phar install
+      - name: Run PHPUnit tests
+        run: ./bin/phpunit --configuration phpunit.xml
+      - name: Downloading scrutinizer ocular.phar
+        run: wget https://scrutinizer-ci.com/ocular.phar
+      - name: Uploading code coverage to scrutinize
+        run: php ocular.phar code-coverage:upload --format=php-clover ./build/coverage/log/coverage.xml
