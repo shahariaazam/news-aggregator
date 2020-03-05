@@ -20,7 +20,7 @@ jobs:
       - name: Install composer dependencies
         run: php composer.phar install
       - name: Run PHPUnit tests
-        run: ./bin/phpunit --configuration phpunit.xml
+        run: ./vendor/bin/phpunit --configuration phpunit.xml
       - name: Downloading scrutinizer ocular.phar
         run: wget https://scrutinizer-ci.com/ocular.phar
       - name: Uploading code coverage to scrutinize
