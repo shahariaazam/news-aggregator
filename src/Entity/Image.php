@@ -8,7 +8,6 @@
 
 namespace Shaharia\NewsAggregator\Entity;
 
-
 use Psr\Http\Message\UriInterface;
 
 class Image
@@ -132,5 +131,17 @@ class Image
     {
         $this->alt = $alt;
         return $this;
+    }
+
+    public function toArray()
+    {
+        return [
+            'src' => (string) $this->getSource(),
+            'caption' => $this->getCaption(),
+            'width' => $this->getWidth() ? intval($this->getWidth()) : null,
+            'height' => $this->getHeight() ? intval($this->getHeight()) : null,
+            'title' => $this->getTitle(),
+            'alt' => $this->getAlt()
+        ];
     }
 }

@@ -8,8 +8,8 @@
 
 namespace Shaharia\NewsAggregator\Entity;
 
-
 use Psr\Http\Message\UriInterface;
+use Shaharia\NewsAggregator\Utility\Common;
 
 class News
 {
@@ -17,67 +17,67 @@ class News
     /**
      * @var UriInterface
      */
-    private $sourceUrl;
+    private $sourceUrl = null;
 
     /**
      * @var UriInterface
      */
-    private $url;
+    private $url = null;
 
     /**
      * @var string
      */
-    private $title;
+    private $title = null;
 
     /**
      * @var string|null
      */
-    private $summeryText;
+    private $summeryText = null;
 
     /**
      * @var Image
      */
-    private $featuredImage;
+    private $featuredImage = null;
 
     /**
      * @var Image[]
      */
-    private $images;
+    private $images = null;
 
     /**
      * @var string|null
      */
-    private $newsText;
+    private $newsText = null;
 
     /**
      * @var \DateTime
      */
-    private $publishedAt;
+    private $publishedAt = null;
 
     /**
      * @var string|null
      */
-    private $author;
+    private $author = null;
 
     /**
      * @var Category[]
      */
-    private $categories;
+    private $categories = null;
 
     /**
      * @var Tag[]
      */
-    private $tags;
+    private $tags = null;
 
     /**
      * @var \DateTime
      */
-    private $modifiedAt;
+    private $modifiedAt = null;
 
     /**
      * @var \DateTime
      */
-    private $extractedAt;
+    private $extractedAt = null;
 
     /**
      * @return UriInterface
@@ -152,27 +152,27 @@ class News
     }
 
     /**
-     * @return Image
+     * @return Image|null
      */
-    public function getFeaturedImage(): Image
+    public function getFeaturedImage()
     {
         return $this->featuredImage;
     }
 
     /**
-     * @param Image $featuredImage
+     * @param Image $featuredImage|null
      * @return News
      */
-    public function setFeaturedImage(Image $featuredImage): News
+    public function setFeaturedImage(Image $featuredImage)
     {
         $this->featuredImage = $featuredImage;
         return $this;
     }
 
     /**
-     * @return Image[]
+     * @return Image[]|null
      */
-    public function getImages(): array
+    public function getImages()
     {
         return $this->images;
     }
@@ -184,6 +184,16 @@ class News
     public function setImages(array $images): News
     {
         $this->images = $images;
+        return $this;
+    }
+
+    /**
+     * @param Image $image
+     * @return News
+     */
+    public function addImage($image): News
+    {
+        $this->images[] = $image;
         return $this;
     }
 
@@ -206,9 +216,9 @@ class News
     }
 
     /**
-     * @return \DateTime
+     * @return \DateTime|null
      */
-    public function getPublishedAt(): \DateTime
+    public function getPublishedAt()
     {
         return $this->publishedAt;
     }
@@ -242,9 +252,9 @@ class News
     }
 
     /**
-     * @return Category[]
+     * @return Category[]|null
      */
-    public function getCategories(): array
+    public function getCategories()
     {
         return $this->categories;
     }
@@ -260,9 +270,9 @@ class News
     }
 
     /**
-     * @return Tag[]
+     * @return Tag[]|null
      */
-    public function getTags(): array
+    public function getTags()
     {
         return $this->tags;
     }
@@ -278,9 +288,9 @@ class News
     }
 
     /**
-     * @return \DateTime
+     * @return \DateTime|null
      */
-    public function getModifiedAt(): \DateTime
+    public function getModifiedAt()
     {
         return $this->modifiedAt;
     }
@@ -311,5 +321,30 @@ class News
     {
         $this->extractedAt = $extractedAt;
         return $this;
+    }
+
+    public function toArray(): array
+    {
+        return [
+            'source_url' => (string) $this->getSourceUrl(),
+            'url' => (string) $this->getUrl(),
+            'title' => $this->getTitle(),
+            'summery_text' => $this->getSummeryText(),
+            'featured_image' => $this->getFeaturedImage() ? $this->getFeaturedImage()->toArray() : null,
+            'images' => $this->getImages() ? array_map(function (Image $image) {
+                return $image->toArray();
+            }, $this->getImages()) : null,
+            'news_text' => $this->getNewsText(),
+            'published_at' => $this->getPublishedAt() ? $this->getPublishedAt()->format("Y-m-d H:i:s") : null,
+            'author' => $this->getAuthor(),
+            'categories' => $this->getCategories() ? array_map(function (Category $tag) {
+                return $tag->toArray();
+            }, $this->getCategories()) : null,
+            'tags' => $this->getTags() ? array_map(function (Tag $tag) {
+                return $tag->toArray();
+            }, $this->getTags()) : null,
+            'modified_at' => $this->getModifiedAt() ? $this->getModifiedAt()->format("Y-m-d H:i:s") : null,
+            'extracted_at' => $this->getExtractedAt() ? $this->getExtractedAt()->format("Y-m-d H:i:s") : null
+        ];
     }
 }

@@ -8,7 +8,6 @@
 
 namespace Shaharia\NewsAggregator\Entity;
 
-
 class Category
 {
     protected $name;
@@ -30,5 +29,12 @@ class Category
     {
         $this->name = $name;
         return $this;
+    }
+
+    public function toArray()
+    {
+        return [
+            'name' => $this->getName()
+        ];
     }
 }
