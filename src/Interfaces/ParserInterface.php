@@ -15,10 +15,10 @@ interface ParserInterface
     public function setContent(string $content): ParserInterface;
 
     /**
-     * @param NewsProviderInterface $newsProviders
+     * @param NewsProviderInterface|null $newsProvider
      * @return ParserInterface
      */
-    public function setNewsProvider(NewsProviderInterface $newsProviders): ParserInterface;
+    public function setNewsProvider(NewsProviderInterface $newsProvider = null): ParserInterface;
 
     /**
      * @return string|null

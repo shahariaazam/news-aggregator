@@ -41,9 +41,9 @@ class ParserSingle implements ParserInterface
     /**
      * @inheritDoc
      */
-    public function setNewsProvider(NewsProviderInterface $newsProviders): ParserInterface
+    public function setNewsProvider(NewsProviderInterface $newsProvider = null): ParserInterface
     {
-        $this->newsProvider = $newsProviders;
+        $this->newsProvider = $newsProvider;
         return $this;
     }
 
@@ -62,6 +62,9 @@ class ParserSingle implements ParserInterface
     public function getNews()
     {
         $dom = new Crawler($this->content);
+        if ($dom->filter("title")->count() < 1) {
+            return null;
+        }
 
         $news = new News();
         $title = $dom->filter("title")->eq(0)->text();

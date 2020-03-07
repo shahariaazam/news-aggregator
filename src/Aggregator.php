@@ -219,7 +219,12 @@ class Aggregator
     {
         $headlines = [];
         foreach ($processors as $provider => $parser) {
-            $headlines = array_merge($headlines, $this->getHeadlines($provider, $parser));
+            $batchHeadlines = $this->getHeadlines($provider, $parser);
+            if (!empty($batchHeadlines)) {
+                $headlines = array_merge($headlines, $batchHeadlines);
+            }
+
+            unset($batchHeadlines);
         }
         return $headlines;
     }

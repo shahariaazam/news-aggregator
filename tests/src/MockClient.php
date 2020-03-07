@@ -9,16 +9,18 @@
 namespace Shaharia\NewsAggregator\Tests;
 
 
-use GuzzleHttp\Psr7\Response;
+use Http\Discovery\Psr17FactoryDiscovery;
 use Http\Mock\Client;
-use Zend\Diactoros\StreamFactory;
 
 class MockClient
 {
     public static function createClient($content = null, $statusCode = 200)
     {
-        $body = (new StreamFactory())->createStream($content);
-        $response = new Response($statusCode, [], $body);
+        $body = Psr17FactoryDiscovery::findStreamFactory()->createStream($content);
+        $response = Psr17FactoryDiscovery::findResponseFactory()
+            ->createResponse($statusCode, 'OK')
+            ->withBody($body);
+
         $client = new Client();
         $client->addResponse($response);
         return $client;

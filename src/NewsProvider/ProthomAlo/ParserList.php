@@ -58,9 +58,9 @@ class ParserList implements ParserInterface
     /**
      * @inheritDoc
      */
-    public function setNewsProvider(NewsProviderInterface $newsProviders): ParserInterface
+    public function setNewsProvider(NewsProviderInterface $newsProvider = null): ParserInterface
     {
-        $this->newsProvider = $newsProviders;
+        $this->newsProvider = $newsProvider;
         return $this;
     }
 
