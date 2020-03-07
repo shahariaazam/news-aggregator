@@ -10,7 +10,7 @@ namespace Shaharia\NewsAggregator\NewsProviders\ProthomAlo;
 
 use Shaharia\NewsAggregator\Interfaces\NewsProvidersInterface;
 
-class ProthomAlo implements NewsProvidersInterface
+class ProthomAloHomepage implements NewsProvidersInterface
 {
     protected $name = "The Daily ProthomAlo";
     protected $description = "Most popular news paper in Bangladesh";

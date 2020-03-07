@@ -4,9 +4,9 @@ namespace NewsProviders\ProthomAlo;
 
 use PHPUnit\Framework\TestCase;
 use Shaharia\NewsAggregator\Interfaces\NewsProvidersInterface;
-use Shaharia\NewsAggregator\NewsProviders\ProthomAlo\ProthomAlo;
+use Shaharia\NewsAggregator\NewsProviders\ProthomAlo\ProthomAloHomepage;
 
-class ProthomAloTest extends TestCase
+class ProthomAloHomepageTest extends TestCase
 {
     /**
      * @var NewsProvidersInterface
@@ -15,7 +15,7 @@ class ProthomAloTest extends TestCase
 
     public function setUp(): void
     {
-        $this->palo = new ProthomAlo();
+        $this->palo = new ProthomAloHomepage();
         parent::setUp();
     }
 
