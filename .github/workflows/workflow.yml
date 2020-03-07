@@ -3,7 +3,26 @@ name: CI
 on: [push, pull_request]
 
 jobs:
-  tests:
+  coding-standards:
+
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v2
+      - name: "Install PHP with extensions"
+        uses: shivammathur/setup-php@v1
+        with:
+          php-version: '7.4'
+          coverage: xdebug
+          extensions: xdebug, intl, pdo_mysql, pdo
+      - name: Install composer
+        run: curl --show-error --silent https://getcomposer.org/installer | php
+      - name: Install composer dependencies
+        run: php composer.phar install
+      - name: Run PHPUnit tests
+        run: ./vendor/bin/phpcs
+
+  phpunit-tests:
 
     runs-on: ubuntu-latest
 
