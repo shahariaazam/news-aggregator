@@ -8,13 +8,13 @@
 
 namespace Shaharia\NewsAggregator\NewsProviders\ProthomAlo;
 
-
 use GuzzleHttp\Psr7\Uri;
 use Psr\Http\Message\ResponseInterface;
 use Shaharia\NewsAggregator\Entity\Image;
 use Shaharia\NewsAggregator\Entity\News;
 use Shaharia\NewsAggregator\Interfaces\NewsProvidersInterface;
 use Shaharia\NewsAggregator\Interfaces\ParserInterface;
+use Shaharia\NewsAggregator\Utility\Common;
 use Symfony\Component\DomCrawler\Crawler;
 
 class Parser implements ParserInterface
@@ -86,7 +86,7 @@ class Parser implements ParserInterface
     {
         $dom = new Crawler($this->content);
 
-       $dom->filter('div > .each')->each(function (Crawler $h){
+        $dom->filter('div > .each')->each(function (Crawler $h) {
             $linkDom = $h->filter("a.link_overlay")->eq(0);
             $imgDom = $h->filter('.image img');
 
@@ -95,15 +95,16 @@ class Parser implements ParserInterface
             $news = new News();
             $news->setTitle($headlineTitleDom->text());
             $news->setSourceUrl(new Uri($this->newsProvider->getUrl()));
-            $news->setUrl(Uri::fromParts(['path' => $linkDom->attr("href"), 'host' => $this->newsProvider->getUrl()]));
+            $news->setUrl($this->getAbsoluteUrl($linkDom->attr("href")));
 
-            if($imgDom->count() > 0){
+            if ($imgDom->count() > 0) {
                 $image = new Image();
-                $image->setSource(new Uri($imgDom->attr("src")));
+                $image->setSource($this->getAbsoluteUrl($imgDom->attr("src")));
                 $image->setAlt($imgDom->attr("alt"));
                 $image->setTitle($imgDom->attr("title"));
 
-                $news->setImages([$image]);
+                $news->addImage($image);
+                $news->setFeaturedImage($image);
             }
 
             $news->setExtractedAt(new \DateTime());
@@ -112,5 +113,15 @@ class Parser implements ParserInterface
         });
 
         return $this;
+    }
+
+    /**
+     * @param $url
+     * @return Uri
+     */
+    protected function getAbsoluteUrl($url)
+    {
+        $aurl = Common::getAbsoluteUrl($this->newsProvider->getUrl(), urldecode($url));
+        return new Uri($aurl);
     }
 }
