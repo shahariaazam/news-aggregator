@@ -3,13 +3,13 @@
 namespace NewsProviders\ProthomAlo;
 
 use PHPUnit\Framework\TestCase;
-use Shaharia\NewsAggregator\Interfaces\NewsProvidersInterface;
-use Shaharia\NewsAggregator\NewsProviders\ProthomAlo\ProthomAlo;
+use Shaharia\NewsAggregator\Interfaces\NewsProviderInterface;
+use Shaharia\NewsAggregator\NewsProvider\ProthomAlo\ProthomAlo;
 
 class ProthomAloHomepageTest extends TestCase
 {
     /**
-     * @var NewsProvidersInterface
+     * @var NewsProviderInterface
      */
     protected $palo;
 

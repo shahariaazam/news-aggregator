@@ -6,7 +6,7 @@
  */
 
 
-namespace Shaharia\NewsAggregator\NewsProviders\ProthomAlo;
+namespace Shaharia\NewsAggregator\NewsProvider\ProthomAlo;
 
 class NorthAmericaCategory extends ProthomAlo
 {

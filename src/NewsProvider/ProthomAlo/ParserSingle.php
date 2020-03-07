@@ -6,24 +6,26 @@
  */
 
 
-namespace Shaharia\NewsAggregator\NewsProviders\ProthomAlo;
+namespace Shaharia\NewsAggregator\NewsProvider\ProthomAlo;
 
+use DateTime;
+use DateTimeZone;
+use Exception;
 use Laminas\Diactoros\Uri;
 use Shaharia\NewsAggregator\Entity\Category;
 use Shaharia\NewsAggregator\Entity\Headline;
 use Shaharia\NewsAggregator\Entity\Image;
 use Shaharia\NewsAggregator\Entity\News;
-use Shaharia\NewsAggregator\Interfaces\NewsProvidersInterface;
+use Shaharia\NewsAggregator\Interfaces\NewsProviderInterface;
 use Shaharia\NewsAggregator\Interfaces\ParserInterface;
 use Shaharia\NewsAggregator\Utility\Common;
 use Symfony\Component\DomCrawler\Crawler;
-use function Clue\StreamFilter\fun;
 
 class ParserSingle implements ParserInterface
 {
     protected $content;
     /**
-     * @var NewsProvidersInterface
+     * @var NewsProviderInterface
      */
     protected $newsProvider;
 
@@ -39,7 +41,7 @@ class ParserSingle implements ParserInterface
     /**
      * @inheritDoc
      */
-    public function setNewsProvider(NewsProvidersInterface $newsProviders): ParserInterface
+    public function setNewsProvider(NewsProviderInterface $newsProviders): ParserInterface
     {
         $this->newsProvider = $newsProviders;
         return $this;
@@ -55,7 +57,7 @@ class ParserSingle implements ParserInterface
 
     /**
      * @inheritDoc
-     * @throws \Exception
+     * @throws Exception
      */
     public function getNews()
     {
@@ -77,7 +79,7 @@ class ParserSingle implements ParserInterface
 
         // Published time
         $publishedTime = $dom->filter("span[itemprop=datePublished]")->eq(0)->text();
-        $publishedAt = Common::createDateTime($publishedTime)->setTimezone(new \DateTimeZone("UTC"));
+        $publishedAt = Common::createDateTime($publishedTime)->setTimezone(new DateTimeZone("UTC"));
 
         // Author
         $author = $dom->filter("span[class=author]")->eq(0)->text("");
@@ -96,7 +98,7 @@ class ParserSingle implements ParserInterface
         $news->setPublishedAt($publishedAt);
         $news->setAuthor($author);
         $news->setCategories($categories);
-        $news->setExtractedAt(new \DateTime());
+        $news->setExtractedAt(new DateTime());
         $news->setNewsText(trim(strip_tags($newsText, '<p><br>')));
 
         return $news;

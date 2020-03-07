@@ -3,10 +3,7 @@
 
 namespace Shaharia\NewsAggregator\Interfaces;
 
-use DateTime;
-use Shaharia\NewsAggregator\Entity\News;
-
-interface NewsProvidersInterface
+interface NewsProviderInterface
 {
     /**
      * Get the news provider name. i.e: BBC, CNN
@@ -52,7 +49,8 @@ interface NewsProvidersInterface
     /**
      * Set URL
      *
-     * @return NewsProvidersInterface
+     * @param string $url
+     * @return NewsProviderInterface
      */
     public function setUrl(string $url);
 }

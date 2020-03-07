@@ -8,13 +8,12 @@
 
 namespace Shaharia\NewsAggregator\Entity;
 
-use Psr\Http\Message\UriInterface;
+use DateTime;
 use Shaharia\NewsAggregator\Entity\Traits\ExtractedAtTrait;
 use Shaharia\NewsAggregator\Entity\Traits\FeaturedImageTrait;
 use Shaharia\NewsAggregator\Entity\Traits\ImagesTrait;
 use Shaharia\NewsAggregator\Entity\Traits\TitleTrait;
 use Shaharia\NewsAggregator\Entity\Traits\UrlTrait;
-use Shaharia\NewsAggregator\Utility\Common;
 
 class News
 {
@@ -32,7 +31,7 @@ class News
     private $newsText = null;
 
     /**
-     * @var \DateTime
+     * @var DateTime
      */
     private $publishedAt = null;
 
@@ -52,7 +51,7 @@ class News
     private $tags = null;
 
     /**
-     * @var \DateTime
+     * @var DateTime
      */
     private $modifiedAt = null;
 
@@ -93,7 +92,7 @@ class News
     }
 
     /**
-     * @return \DateTime|null
+     * @return DateTime|null
      */
     public function getPublishedAt()
     {
@@ -101,10 +100,10 @@ class News
     }
 
     /**
-     * @param \DateTime $publishedAt
+     * @param DateTime $publishedAt
      * @return News
      */
-    public function setPublishedAt(\DateTime $publishedAt): News
+    public function setPublishedAt(DateTime $publishedAt): News
     {
         $this->publishedAt = $publishedAt;
         return $this;
@@ -165,7 +164,7 @@ class News
     }
 
     /**
-     * @return \DateTime|null
+     * @return DateTime|null
      */
     public function getModifiedAt()
     {
@@ -173,28 +172,28 @@ class News
     }
 
     /**
-     * @param \DateTime $modifiedAt
+     * @param DateTime $modifiedAt
      * @return News
      */
-    public function setModifiedAt(\DateTime $modifiedAt): News
+    public function setModifiedAt(DateTime $modifiedAt): News
     {
         $this->modifiedAt = $modifiedAt;
         return $this;
     }
 
     /**
-     * @return \DateTime
+     * @return DateTime
      */
-    public function getExtractedAt(): \DateTime
+    public function getExtractedAt(): DateTime
     {
         return $this->extractedAt;
     }
 
     /**
-     * @param \DateTime $extractedAt
+     * @param DateTime $extractedAt
      * @return News
      */
-    public function setExtractedAt(\DateTime $extractedAt): News
+    public function setExtractedAt(DateTime $extractedAt): News
     {
         $this->extractedAt = $extractedAt;
         return $this;

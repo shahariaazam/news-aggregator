@@ -6,14 +6,15 @@
  */
 
 
-namespace Shaharia\NewsAggregator\NewsProviders\ProthomAlo;
+namespace Shaharia\NewsAggregator\NewsProvider\ProthomAlo;
 
+use DateTime;
 use Laminas\Diactoros\Uri;
 use Psr\Http\Message\ResponseInterface;
 use Shaharia\NewsAggregator\Entity\Headline;
 use Shaharia\NewsAggregator\Entity\Image;
 use Shaharia\NewsAggregator\Entity\News;
-use Shaharia\NewsAggregator\Interfaces\NewsProvidersInterface;
+use Shaharia\NewsAggregator\Interfaces\NewsProviderInterface;
 use Shaharia\NewsAggregator\Interfaces\ParserInterface;
 use Shaharia\NewsAggregator\Utility\Common;
 use Symfony\Component\DomCrawler\Crawler;
@@ -26,7 +27,7 @@ class ParserList implements ParserInterface
     protected $response;
 
     /**
-     * @var NewsProvidersInterface
+     * @var NewsProviderInterface
      */
     protected $newsProvider;
 
@@ -57,7 +58,7 @@ class ParserList implements ParserInterface
     /**
      * @inheritDoc
      */
-    public function setNewsProvider(NewsProvidersInterface $newsProviders): ParserInterface
+    public function setNewsProvider(NewsProviderInterface $newsProviders): ParserInterface
     {
         $this->newsProvider = $newsProviders;
         return $this;
@@ -115,7 +116,7 @@ class ParserList implements ParserInterface
                     $headline->setFeaturedImage($image);
                 }
 
-                $headline->setExtractedAt(new \DateTime());
+                $headline->setExtractedAt(new DateTime());
 
                 $this->headlines[] = $headline;
             }
@@ -130,7 +131,7 @@ class ParserList implements ParserInterface
      */
     protected function getAbsoluteUrl($url)
     {
-        $aurl = Common::getAbsoluteUrl($this->newsProvider->getUrl(), urldecode($url));
-        return new Uri($aurl);
+        $absoluteUrl = Common::getAbsoluteUrl($this->newsProvider->getUrl(), urldecode($url));
+        return new Uri($absoluteUrl);
     }
 }

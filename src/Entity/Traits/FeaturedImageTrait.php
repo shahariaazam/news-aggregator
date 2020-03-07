@@ -4,7 +4,6 @@
 namespace Shaharia\NewsAggregator\Entity\Traits;
 
 use Shaharia\NewsAggregator\Entity\Image;
-use Shaharia\NewsAggregator\Entity\News;
 
 trait FeaturedImageTrait
 {

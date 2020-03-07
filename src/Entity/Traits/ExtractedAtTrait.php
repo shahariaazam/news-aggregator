@@ -3,26 +3,28 @@
 
 namespace Shaharia\NewsAggregator\Entity\Traits;
 
+use DateTime;
+
 trait ExtractedAtTrait
 {
     /**
-     * @var \DateTime
+     * @var DateTime
      */
     private $extractedAt = null;
 
     /**
-     * @return \DateTime
+     * @return DateTime
      */
-    public function getExtractedAt(): \DateTime
+    public function getExtractedAt(): DateTime
     {
         return $this->extractedAt;
     }
 
     /**
-     * @param \DateTime $extractedAt
+     * @param DateTime $extractedAt
      * @return ExtractedAtTrait
      */
-    public function setExtractedAt(\DateTime $extractedAt)
+    public function setExtractedAt(DateTime $extractedAt)
     {
         $this->extractedAt = $extractedAt;
         return $this;

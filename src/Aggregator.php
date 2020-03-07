@@ -15,11 +15,8 @@ use Http\Client\Common\Plugin\LoggerPlugin;
 use Http\Client\Common\PluginClient;
 use Http\Client\HttpClient;
 use Http\Discovery\HttpClientDiscovery;
-use Http\Discovery\MessageFactoryDiscovery;
 use Http\Discovery\Psr17FactoryDiscovery;
-use Http\Discovery\StreamFactoryDiscovery;
 use Http\Message\MessageFactory;
-use Http\Message\RequestFactory;
 use Psr\Cache\CacheItemPoolInterface;
 use Psr\Http\Client\ClientExceptionInterface;
 use Psr\Http\Message\RequestFactoryInterface;
@@ -27,13 +24,13 @@ use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\StreamFactoryInterface;
 use Psr\Http\Message\UriInterface;
 use Psr\Log\LoggerInterface;
-use Shaharia\NewsAggregator\Interfaces\NewsProvidersInterface;
+use Shaharia\NewsAggregator\Interfaces\NewsProviderInterface;
 use Shaharia\NewsAggregator\Interfaces\ParserInterface;
 
 class Aggregator
 {
     /**
-     * @var NewsProvidersInterface
+     * @var NewsProviderInterface
      */
     protected $provider;
 
@@ -74,7 +71,6 @@ class Aggregator
 
     /**
      * Aggregator constructor.
-     * @param NewsProvidersInterface $newsProviders
      */
     public function __construct()
     {
@@ -236,6 +232,9 @@ class Aggregator
      */
     public function getNews(UriInterface $uri, $parserClass)
     {
+        /**
+         * @var $parser ParserInterface
+         */
         $parser = new $parserClass;
 
         $response = $this->makeRequest((string) $uri);

@@ -9,7 +9,6 @@
 namespace Shaharia\NewsAggregator\Entity\Traits;
 
 use Psr\Http\Message\UriInterface;
-use Shaharia\NewsAggregator\Entity\News;
 
 trait UrlTrait
 {

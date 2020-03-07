@@ -6,11 +6,11 @@
  */
 
 
-namespace Shaharia\NewsAggregator\NewsProviders\ProthomAlo;
+namespace Shaharia\NewsAggregator\NewsProvider\ProthomAlo;
 
-use Shaharia\NewsAggregator\Interfaces\NewsProvidersInterface;
+use Shaharia\NewsAggregator\Interfaces\NewsProviderInterface;
 
-class ProthomAlo implements NewsProvidersInterface
+class ProthomAlo implements NewsProviderInterface
 {
     protected $name = "The Daily ProthomAlo";
     protected $description = "Most popular news paper in Bangladesh";

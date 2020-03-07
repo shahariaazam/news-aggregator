@@ -1,21 +1,13 @@
 <?php
 
-namespace Shaharia\NewsAggregator\Tests\NewsProviders\ProthomAlo;
+namespace Shaharia\NewsAggregator\Tests\NewsProvider\ProthomAlo;
 
-use GuzzleHttp\Psr7\Request;
-use GuzzleHttp\Psr7\Response;
-use GuzzleHttp\Psr7\Stream;
-use http\Message\Body;
-use Http\Mock\Client;
-use Shaharia\NewsAggregator\Aggregator;
-use Shaharia\NewsAggregator\Interfaces\NewsProvidersInterface;
+use Shaharia\NewsAggregator\Interfaces\NewsProviderInterface;
 use Shaharia\NewsAggregator\Interfaces\ParserInterface;
-use Shaharia\NewsAggregator\NewsProviders\ProthomAlo\ParserList;
+use Shaharia\NewsAggregator\NewsProvider\ProthomAlo\ParserList;
 use PHPUnit\Framework\TestCase;
-use Shaharia\NewsAggregator\NewsProviders\ProthomAlo\ParserSingle;
-use Shaharia\NewsAggregator\NewsProviders\ProthomAlo\ProthomAlo;
-use Shaharia\NewsAggregator\Tests\MockClient;
-use Zend\Diactoros\StreamFactory;
+use Shaharia\NewsAggregator\NewsProvider\ProthomAlo\ParserSingle;
+use Shaharia\NewsAggregator\NewsProvider\ProthomAlo\ProthomAlo;
 
 class ParserTest extends TestCase
 {
@@ -25,7 +17,7 @@ class ParserTest extends TestCase
     private $parser;
 
     /**
-     * @var NewsProvidersInterface
+     * @var NewsProviderInterface
      */
     private $newsProvider;
 
