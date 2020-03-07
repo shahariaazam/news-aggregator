@@ -22,7 +22,7 @@ That's it. I have tried to keep it very very simple but extensible.
 
 You can install this library using `composer`. Just run the following command.
 
-```
+```sh
 composer require shahariaazam/news-aggregator
 ```
 That's it.
@@ -32,7 +32,7 @@ That's it.
 #### Simple Usage
 For more basic and easiest code example.
 
-```
+```php
 <?php
 require __DIR__ . "/vendor/autoload.php";
 
@@ -63,7 +63,7 @@ $news = $aggregator->getNews(
 var_dump($news);
 ```
 #### Advance Usage
-```
+```php
 /**
 *   Customize your aggregator engine with your own libraries.
 *   This library complies with dependency inversion principle.
