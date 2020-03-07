@@ -69,8 +69,7 @@ class Parser implements ParserInterface
     /**
      * @inheritDoc
      */
-    public function getContent()
-    {
+    public function getContent(){
         return $this->content;
     }
 
