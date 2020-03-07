@@ -14,6 +14,7 @@ use Http\Discovery\MessageFactoryDiscovery;
 use Http\Message\MessageFactory;
 use Psr\Http\Client\ClientExceptionInterface;
 use Psr\Http\Message\ResponseInterface;
+use Psr\Http\Message\UriInterface;
 use Shaharia\NewsAggregator\Interfaces\NewsProvidersInterface;
 use Shaharia\NewsAggregator\Interfaces\ParserInterface;
 
@@ -59,30 +60,54 @@ class Aggregator
      * @return ResponseInterface
      * @throws ClientExceptionInterface
      */
-    public function makeRequest()
+    public function makeRequest($url)
     {
         return $this->httpClient->sendRequest(
-            $this->messageFactory->createRequest('GET', $this->provider->getUrl())
+            $this->messageFactory->createRequest('GET', $url)
         );
     }
 
     /**
-     * @return Entity\News[]|null
+     * @param ParserInterface|null $parser
+     * @return Entity\Headline[]
      * @throws ClientExceptionInterface
      */
-    public function getNews()
+    public function getHeadlines(ParserInterface $parser = null)
     {
-        $parserClass = $this->provider->getParserClass();
+        if (!$parser) {
+            $parserClass = $this->provider->getListParser();
+            $parser = new $parserClass();
+        }
 
-        $response = $this->makeRequest();
+        $response = $this->makeRequest($this->provider->getUrl());
 
         /**
          * @var $parser ParserInterface
          */
-        $parser = new $parserClass();
         $parser->setContent($response->getBody()->getContents());
         $parser->setNewsProvider($this->provider);
-        $parser->parse();
+        return $parser->getHeadlines();
+    }
+
+    /**
+     * @param UriInterface $url
+     * @param ParserInterface|null $parser
+     * @return Entity\News[]|null
+     * @throws ClientExceptionInterface
+     */
+    public function getNews(UriInterface $url, ParserInterface $parser = null)
+    {
+        if (!$parser) {
+            $parser = $this->provider->getDetailsParser();
+            /**
+             * @var $parser ParserInterface
+             */
+            $parser = new $parser();
+        }
+
+        $response = $this->makeRequest($url);
+        $parser->setContent($response->getBody()->getContents());
+        $parser->setNewsProvider($this->provider);
         return $parser->getNews();
     }
 }

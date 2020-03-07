@@ -4,7 +4,7 @@ namespace NewsProviders\ProthomAlo;
 
 use PHPUnit\Framework\TestCase;
 use Shaharia\NewsAggregator\Interfaces\NewsProvidersInterface;
-use Shaharia\NewsAggregator\NewsProviders\ProthomAlo\ProthomAloHomepage;
+use Shaharia\NewsAggregator\NewsProviders\ProthomAlo\ProthomAlo;
 
 class ProthomAloHomepageTest extends TestCase
 {
@@ -15,7 +15,7 @@ class ProthomAloHomepageTest extends TestCase
 
     public function setUp(): void
     {
-        $this->palo = new ProthomAloHomepage();
+        $this->palo = new ProthomAlo();
         parent::setUp();
     }
 
@@ -36,7 +36,7 @@ class ProthomAloHomepageTest extends TestCase
 
     public function testGetParserClass()
     {
-        $this->assertTrue(class_exists($this->palo->getParserClass()));
+        $this->assertTrue(class_exists($this->palo->getListParser()));
     }
 
     public function testGetPrimaryLanguage()

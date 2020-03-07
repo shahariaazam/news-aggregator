@@ -9,40 +9,22 @@
 namespace Shaharia\NewsAggregator\Entity;
 
 use Psr\Http\Message\UriInterface;
+use Shaharia\NewsAggregator\Entity\Traits\ExtractedAtTrait;
+use Shaharia\NewsAggregator\Entity\Traits\FeaturedImageTrait;
+use Shaharia\NewsAggregator\Entity\Traits\ImagesTrait;
+use Shaharia\NewsAggregator\Entity\Traits\TitleTrait;
+use Shaharia\NewsAggregator\Entity\Traits\UrlTrait;
 use Shaharia\NewsAggregator\Utility\Common;
 
 class News
 {
 
-    /**
-     * @var UriInterface
-     */
-    private $sourceUrl = null;
-
-    /**
-     * @var UriInterface
-     */
-    private $url = null;
-
-    /**
-     * @var string
-     */
-    private $title = null;
+    use TitleTrait, ImagesTrait, UrlTrait, FeaturedImageTrait, ExtractedAtTrait;
 
     /**
      * @var string|null
      */
     private $summeryText = null;
-
-    /**
-     * @var Image
-     */
-    private $featuredImage = null;
-
-    /**
-     * @var Image[]
-     */
-    private $images = null;
 
     /**
      * @var string|null
@@ -75,65 +57,6 @@ class News
     private $modifiedAt = null;
 
     /**
-     * @var \DateTime
-     */
-    private $extractedAt = null;
-
-    /**
-     * @return UriInterface
-     */
-    public function getSourceUrl(): UriInterface
-    {
-        return $this->sourceUrl;
-    }
-
-    /**
-     * @param UriInterface $sourceUrl
-     * @return News
-     */
-    public function setSourceUrl(UriInterface $sourceUrl): News
-    {
-        $this->sourceUrl = $sourceUrl;
-        return $this;
-    }
-
-    /**
-     * @return UriInterface
-     */
-    public function getUrl(): UriInterface
-    {
-        return $this->url;
-    }
-
-    /**
-     * @param UriInterface $url
-     * @return News
-     */
-    public function setUrl(UriInterface $url): News
-    {
-        $this->url = $url;
-        return $this;
-    }
-
-    /**
-     * @return string
-     */
-    public function getTitle(): string
-    {
-        return $this->title;
-    }
-
-    /**
-     * @param string $title
-     * @return News
-     */
-    public function setTitle(string $title): News
-    {
-        $this->title = $title;
-        return $this;
-    }
-
-    /**
      * @return string|null
      */
     public function getSummeryText(): ?string
@@ -148,52 +71,6 @@ class News
     public function setSummeryText(?string $summeryText): News
     {
         $this->summeryText = $summeryText;
-        return $this;
-    }
-
-    /**
-     * @return Image|null
-     */
-    public function getFeaturedImage()
-    {
-        return $this->featuredImage;
-    }
-
-    /**
-     * @param Image $featuredImage|null
-     * @return News
-     */
-    public function setFeaturedImage(Image $featuredImage)
-    {
-        $this->featuredImage = $featuredImage;
-        return $this;
-    }
-
-    /**
-     * @return Image[]|null
-     */
-    public function getImages()
-    {
-        return $this->images;
-    }
-
-    /**
-     * @param Image[] $images
-     * @return News
-     */
-    public function setImages(array $images): News
-    {
-        $this->images = $images;
-        return $this;
-    }
-
-    /**
-     * @param Image $image
-     * @return News
-     */
-    public function addImage($image): News
-    {
-        $this->images[] = $image;
         return $this;
     }
 

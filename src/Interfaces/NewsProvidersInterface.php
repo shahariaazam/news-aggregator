@@ -38,6 +38,11 @@ interface NewsProvidersInterface
     public function getPrimaryLanguage();
 
     /**
+     * @return string
+     */
+    public function getHomepageUrl();
+
+    /**
      * Get URL
      *
      * @return string
@@ -45,7 +50,19 @@ interface NewsProvidersInterface
     public function getUrl();
 
     /**
+     * Set URL
+     *
+     * @return NewsProvidersInterface
+     */
+    public function setUrl(string $url);
+
+    /**
      * @return string
      */
-    public function getParserClass();
+    public function getListParser();
+
+    /**
+     * @return string
+     */
+    public function getDetailsParser();
 }

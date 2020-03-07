@@ -10,11 +10,12 @@ namespace Shaharia\NewsAggregator\NewsProviders\ProthomAlo;
 
 use Shaharia\NewsAggregator\Interfaces\NewsProvidersInterface;
 
-class ProthomAloHomepage implements NewsProvidersInterface
+class ProthomAlo implements NewsProvidersInterface
 {
     protected $name = "The Daily ProthomAlo";
     protected $description = "Most popular news paper in Bangladesh";
     protected $logo = "https://paloimages.prothom-alo.com/contents/themes/public/style/images/Prothom-Alo.png";
+    protected $homepageUrl = "https://www.prothomalo.com/";
     protected $url = "https://www.prothomalo.com/";
 
     /**
@@ -52,6 +53,14 @@ class ProthomAloHomepage implements NewsProvidersInterface
     /**
      * @inheritDoc
      */
+    public function getHomepageUrl()
+    {
+        return $this->homepageUrl;
+    }
+
+    /**
+     * @inheritDoc
+     */
     public function getUrl()
     {
         return $this->url;
@@ -60,8 +69,25 @@ class ProthomAloHomepage implements NewsProvidersInterface
     /**
      * @inheritDoc
      */
-    public function getParserClass()
+    public function setUrl(string $url)
     {
-        return 'Shaharia\NewsAggregator\NewsProviders\ProthomAlo\Parser';
+        $this->url = $url;
+        return $this;
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function getListParser()
+    {
+        return 'Shaharia\NewsAggregator\NewsProviders\ProthomAlo\ParserList';
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function getDetailsParser()
+    {
+        return 'Shaharia\NewsAggregator\NewsProviders\ProthomAlo\ParserSingle';
     }
 }

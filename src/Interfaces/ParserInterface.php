@@ -4,6 +4,7 @@
 namespace Shaharia\NewsAggregator\Interfaces;
 
 use Psr\Http\Message\ResponseInterface;
+use Shaharia\NewsAggregator\Entity\Headline;
 use Shaharia\NewsAggregator\Entity\News;
 
 interface ParserInterface
@@ -15,10 +16,10 @@ interface ParserInterface
     public function setContent(string $content): ParserInterface;
 
     /**
-     * @param NewsProvidersInterface $response
+     * @param NewsProvidersInterface $newsProviders
      * @return ParserInterface
      */
-    public function setNewsProvider(NewsProvidersInterface $response): ParserInterface;
+    public function setNewsProvider(NewsProvidersInterface $newsProviders): ParserInterface;
 
     /**
      * @return string|null
@@ -26,12 +27,12 @@ interface ParserInterface
     public function getContent();
 
     /**
-     * @return ParserInterface
+     * @return Headline[]|null
      */
-    public function parse();
+    public function getHeadlines();
 
     /**
-     * @return News[]|null
+     * @return News|null
      */
     public function getNews();
 }

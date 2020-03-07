@@ -20,7 +20,7 @@ jobs:
       - name: Install composer dependencies
         run: php composer.phar install
       - name: Run PHP Coding Standard Checking
-        run: ./vendor/bin/phpcs
+        run: ./vendor/bin/phpcs -n
 
   phpunit-tests:
 
