@@ -3,7 +3,6 @@
 
 namespace Shaharia\NewsAggregator\Interfaces;
 
-
 use DateTime;
 use Shaharia\NewsAggregator\Entity\News;
 

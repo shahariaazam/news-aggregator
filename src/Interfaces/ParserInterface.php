@@ -3,7 +3,6 @@
 
 namespace Shaharia\NewsAggregator\Interfaces;
 
-
 use Psr\Http\Message\ResponseInterface;
 use Shaharia\NewsAggregator\Entity\News;
 

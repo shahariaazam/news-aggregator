@@ -12,7 +12,7 @@ use Shaharia\NewsAggregator\Interfaces\NewsProvidersInterface;
 use Shaharia\NewsAggregator\Interfaces\ParserInterface;
 use Shaharia\NewsAggregator\NewsProviders\ProthomAlo\Parser;
 use PHPUnit\Framework\TestCase;
-use Shaharia\NewsAggregator\NewsProviders\ProthomAlo\ProthomAlo;
+use Shaharia\NewsAggregator\NewsProviders\ProthomAlo\ProthomAloHomepage;
 use Shaharia\NewsAggregator\Tests\MockClient;
 use Zend\Diactoros\StreamFactory;
 
@@ -32,7 +32,7 @@ class ParserTest extends TestCase
     {
         $this->parser = new Parser();
         $this->parser->setContent(file_get_contents(__DIR__ . DIRECTORY_SEPARATOR . "ProthomAlo.txt"));
-        $this->parser->setNewsProvider(new ProthomAlo());
+        $this->parser->setNewsProvider(new ProthomAloHomepage());
 
         parent::setUp();
     }
