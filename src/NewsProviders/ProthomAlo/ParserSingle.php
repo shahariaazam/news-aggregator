@@ -8,7 +8,7 @@
 
 namespace Shaharia\NewsAggregator\NewsProviders\ProthomAlo;
 
-use GuzzleHttp\Psr7\Uri;
+use Laminas\Diactoros\Uri;
 use Shaharia\NewsAggregator\Entity\Category;
 use Shaharia\NewsAggregator\Entity\Headline;
 use Shaharia\NewsAggregator\Entity\Image;
@@ -55,6 +55,7 @@ class ParserSingle implements ParserInterface
 
     /**
      * @inheritDoc
+     * @throws \Exception
      */
     public function getNews()
     {

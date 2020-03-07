@@ -8,7 +8,7 @@
 
 namespace Shaharia\NewsAggregator\NewsProviders\ProthomAlo;
 
-use GuzzleHttp\Psr7\Uri;
+use Laminas\Diactoros\Uri;
 use Psr\Http\Message\ResponseInterface;
 use Shaharia\NewsAggregator\Entity\Headline;
 use Shaharia\NewsAggregator\Entity\Image;
