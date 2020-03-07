@@ -81,6 +81,10 @@ $aggregator->setCache($cache);
 $aggregator->setLogger($logger);
 ```
 
+### Available News Sources
+- BBC (International from UK) - `Lists`
+- The Daily ProthomAlo (Bangladeshi Daily) - `Lists | Details`
+
 ### Issue & bug reporting
 Please create a new issue from https://github.com/shahariaazam/news-aggregator/issues
 
