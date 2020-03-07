@@ -9,6 +9,7 @@
 namespace Shaharia\NewsAggregator;
 
 use Http\Client\Common\Plugin\CachePlugin;
+use Http\Client\Common\Plugin\DecoderPlugin;
 use Http\Client\Common\Plugin\HeaderSetPlugin;
 use Http\Client\Common\Plugin\LoggerPlugin;
 use Http\Client\Common\PluginClient;
@@ -42,6 +43,11 @@ class Aggregator
     protected $httpClient;
 
     /**
+     * @var PluginClient
+     */
+    protected $pluginHttpClient;
+
+    /**
      * @var array
      */
     protected $httpClientHeaders = [];
@@ -70,12 +76,21 @@ class Aggregator
      * Aggregator constructor.
      * @param NewsProvidersInterface $newsProviders
      */
-    public function __construct(NewsProvidersInterface $newsProviders)
+    public function __construct()
     {
-        $this->provider = $newsProviders;
         $this->httpClient = HttpClientDiscovery::find();
         $this->requestFactory = Psr17FactoryDiscovery::findRequestFactory();
         $this->streamFactory = Psr17FactoryDiscovery::findStreamFactory();
+
+        $this->buildHttpClient();
+    }
+
+    /**
+     * @return Aggregator
+     */
+    public static function init()
+    {
+        return new self();
     }
 
     /**
@@ -139,18 +154,13 @@ class Aggregator
     }
 
     /**
-     * @param $url
-     * @param string $method
-     * @param array $headers
-     * @return ResponseInterface
-     * @throws ClientExceptionInterface
+     * @return PluginClient
      */
-    public function makeRequest($url, $method = "GET", array $headers = [])
+    protected function buildHttpClient()
     {
-        $this->addHttpClientHeaders($headers);
-
         $httpClientPlugins = [
-            new HeaderSetPlugin($this->httpClientHeaders)
+            new HeaderSetPlugin($this->httpClientHeaders),
+            new DecoderPlugin()
         ];
 
         if ($this->cache instanceof CacheItemPoolInterface) {
@@ -161,27 +171,38 @@ class Aggregator
             $httpClientPlugins[] = new LoggerPlugin($this->logger);
         }
 
-        $pluginClient = new PluginClient(
+        return $this->pluginHttpClient = new PluginClient(
             $this->httpClient,
             $httpClientPlugins
         );
+    }
 
-        return $pluginClient->sendRequest(
+    /**
+     * @param $url
+     * @param string $method
+     * @param array $headers
+     * @return ResponseInterface
+     * @throws ClientExceptionInterface
+     */
+    public function makeRequest($url, $method = "GET", array $headers = [])
+    {
+        $this->addHttpClientHeaders($headers);
+        $this->buildHttpClient();
+        return $this->pluginHttpClient->sendRequest(
             $this->requestFactory->createRequest($method, $url)
         );
     }
 
     /**
-     * @param ParserInterface|null $parser
+     * @param $newsProviderClass
+     * @param $parserClass
      * @return Entity\Headline[]
      * @throws ClientExceptionInterface
      */
-    public function getHeadlines(ParserInterface $parser = null)
+    public function getHeadlines($newsProviderClass, $parserClass)
     {
-        if (!$parser) {
-            $parserClass = $this->provider->getListParser();
-            $parser = new $parserClass();
-        }
+        $this->provider = new $newsProviderClass;
+        $parser = new $parserClass;
 
         $response = $this->makeRequest($this->provider->getUrl());
 
@@ -194,22 +215,30 @@ class Aggregator
     }
 
     /**
-     * @param UriInterface $url
-     * @param ParserInterface|null $parser
+     * @param array $processors
+     * @return Entity\Headline[]
+     * @throws ClientExceptionInterface
+     */
+    public function getHeadlinesInBatches(array $processors = [])
+    {
+        $headlines = [];
+        foreach ($processors as $provider => $parser) {
+            $headlines = array_merge($headlines, $this->getHeadlines($provider, $parser));
+        }
+        return $headlines;
+    }
+
+    /**
+     * @param UriInterface $uri
+     * @param $parserClass
      * @return Entity\News
      * @throws ClientExceptionInterface
      */
-    public function getNews(UriInterface $url, ParserInterface $parser = null)
+    public function getNews(UriInterface $uri, $parserClass)
     {
-        if (!$parser) {
-            $parser = $this->provider->getDetailsParser();
-            /**
-             * @var $parser ParserInterface
-             */
-            $parser = new $parser();
-        }
+        $parser = new $parserClass;
 
-        $response = $this->makeRequest($url);
+        $response = $this->makeRequest((string) $uri);
         $parser->setContent($response->getBody()->getContents());
         $parser->setNewsProvider($this->provider);
         return $parser->getNews();

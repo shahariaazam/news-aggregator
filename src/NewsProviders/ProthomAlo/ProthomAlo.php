@@ -74,20 +74,4 @@ class ProthomAlo implements NewsProvidersInterface
         $this->url = $url;
         return $this;
     }
-
-    /**
-     * @inheritDoc
-     */
-    public function getListParser()
-    {
-        return 'Shaharia\NewsAggregator\NewsProviders\ProthomAlo\ParserList';
-    }
-
-    /**
-     * @inheritDoc
-     */
-    public function getDetailsParser()
-    {
-        return 'Shaharia\NewsAggregator\NewsProviders\ProthomAlo\ParserSingle';
-    }
 }

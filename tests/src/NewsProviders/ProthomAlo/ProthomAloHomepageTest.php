@@ -34,11 +34,6 @@ class ProthomAloHomepageTest extends TestCase
         $this->assertNotEmpty($this->palo->getUrl());
     }
 
-    public function testGetParserClass()
-    {
-        $this->assertTrue(class_exists($this->palo->getListParser()));
-    }
-
     public function testGetPrimaryLanguage()
     {
         $this->assertNotEmpty($this->palo->getPrimaryLanguage());

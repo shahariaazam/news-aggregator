@@ -55,14 +55,4 @@ interface NewsProvidersInterface
      * @return NewsProvidersInterface
      */
     public function setUrl(string $url);
-
-    /**
-     * @return string
-     */
-    public function getListParser();
-
-    /**
-     * @return string
-     */
-    public function getDetailsParser();
 }
