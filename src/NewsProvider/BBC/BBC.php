@@ -8,7 +8,6 @@
 
 namespace Shaharia\NewsAggregator\NewsProvider\BBC;
 
-
 use Shaharia\NewsAggregator\Interfaces\NewsProviderInterface;
 
 class BBC implements NewsProviderInterface
