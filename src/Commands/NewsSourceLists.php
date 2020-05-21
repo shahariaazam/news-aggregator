@@ -8,7 +8,6 @@
 
 namespace Shaharia\NewsAggregator\Commands;
 
-
 use Shaharia\NewsAggregator\Interfaces\NewsProviderInterface;
 use Shaharia\NewsAggregator\SourceMaps;
 use Symfony\Component\Console\Command\Command;
@@ -33,7 +32,8 @@ class NewsSourceLists extends Command
                     new InputOption('list', 'l', InputOption::VALUE_NONE),
                     new InputOption('show', 's', InputOption::VALUE_REQUIRED)
                 ])
-            );;
+            );
+        ;
     }
 
     protected function execute(InputInterface $input, OutputInterface $output)
@@ -92,7 +92,9 @@ class NewsSourceLists extends Command
         $output->writeln("<info>" . "Homepage\t: " . "</info>" . $provider->getHomepageUrl());
         $output->writeln("<info>" . "Source URL\t: " . "</info>" . $provider->getUrl());
         $output->writeln("<info>" . "Description\t: " . "</info>" . $provider->getDescription());
-        $output->writeln("<info>" . "News Format\t: " . "</info>" . implode(", ",
-                $sourceMaps->getNewsTypesBySlug($providerSlug)));
+        $output->writeln("<info>" . "News Format\t: " . "</info>" . implode(
+            ", ",
+            $sourceMaps->getNewsTypesBySlug($providerSlug)
+        ));
     }
 }

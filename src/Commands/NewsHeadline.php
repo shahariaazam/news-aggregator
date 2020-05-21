@@ -8,7 +8,6 @@
 
 namespace Shaharia\NewsAggregator\Commands;
 
-
 use Shaharia\NewsAggregator\Aggregator;
 use Shaharia\NewsAggregator\SourceMaps;
 use Symfony\Component\Console\Command\Command;
@@ -44,7 +43,7 @@ class NewsHeadline extends Command
             $sourceMaps = new SourceMaps();
             $provider = $sourceMaps->getHeadLineProviderBySlug($providerSlug);
 
-            if(empty($provider)){
+            if (empty($provider)) {
                 $output->writeln("Invalid news source");
                 return 1;
             }
@@ -55,23 +54,23 @@ class NewsHeadline extends Command
                 $provider['provider_parser']  // Parser class
             );
 
-            if($input->getOption('json')){
+            if ($input->getOption('json')) {
                 $data = [];
-                foreach ($headlines as $headline){
-                    if($input->getOption('with-url')){
+                foreach ($headlines as $headline) {
+                    if ($input->getOption('with-url')) {
                         $data[] = ['headline' => $headline->getTitle(), 'url' => (string) $headline->getUrl()];
-                    }else{
+                    } else {
                         $data[] = ['headline' => $headline->getTitle()];
                     }
                 }
 
                 $output->writeln(json_encode($data, JSON_PRETTY_PRINT));
-            }else{
-                foreach ($headlines as $headline){
-                    if($input->getOption('with-url')){
+            } else {
+                foreach ($headlines as $headline) {
+                    if ($input->getOption('with-url')) {
                         $output->writeln($headline->getTitle());
                         $output->writeln("Link: " . $headline->getUrl());
-                    }else{
+                    } else {
                         $output->writeln($headline->getTitle());
                     }
 

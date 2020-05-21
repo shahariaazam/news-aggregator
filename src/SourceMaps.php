@@ -8,7 +8,6 @@
 
 namespace Shaharia\NewsAggregator;
 
-
 use Shaharia\NewsAggregator\Interfaces\NewsProviderInterface;
 use Shaharia\NewsAggregator\NewsProvider\BBC\BBC;
 use Shaharia\NewsAggregator\NewsProvider\BBC\HomepageParser;
@@ -62,13 +61,14 @@ class SourceMaps
      * @param $slug
      * @return array
      */
-    public function getNewsTypesBySlug($slug){
+    public function getNewsTypesBySlug($slug)
+    {
 
-        $sources = array_filter($this->lists, function($source) use ($slug) {
+        $sources = array_filter($this->lists, function ($source) use ($slug) {
             return $slug === $source['provider_slug'];
         });
 
-        $types = array_map(function($s){
+        $types = array_map(function ($s) {
             return $s['parse_type'];
         }, $sources);
 
@@ -79,13 +79,14 @@ class SourceMaps
      * @param $slug
      * @return array|\string[]
      */
-    public function getHeadLineProviderBySlug($slug){
+    public function getHeadLineProviderBySlug($slug)
+    {
 
-        $pr = array_filter($this->lists, function($source) use ($slug) {
+        $pr = array_filter($this->lists, function ($source) use ($slug) {
             return $slug === $source['provider_slug'] && $source['parse_type'] === self::PARSE_TYPE_HEADLINE;
         });
 
-        if(count($pr) < 1){
+        if (count($pr) < 1) {
             return null;
         }
 
@@ -96,13 +97,14 @@ class SourceMaps
      * @param $slug
      * @return NewsProviderInterface|null
      */
-    public function getProviderBySlug($slug){
+    public function getProviderBySlug($slug)
+    {
 
-        $sources = array_filter($this->lists, function($source) use ($slug) {
+        $sources = array_filter($this->lists, function ($source) use ($slug) {
             return $slug === $source['provider_slug'];
         });
 
-        if(count($sources) < 1){
+        if (count($sources) < 1) {
             return null;
         }
 
