@@ -14,6 +14,7 @@ use Shaharia\NewsAggregator\NewsProvider\BBC\HomepageParser;
 use Shaharia\NewsAggregator\NewsProvider\ProthomAlo\NorthAmericaCategory;
 use Shaharia\NewsAggregator\NewsProvider\ProthomAlo\ParserList;
 use Shaharia\NewsAggregator\NewsProvider\ProthomAlo\ParserSingle;
+use Shaharia\NewsAggregator\NewsProvider\ProthomAlo\ProthomAlo;
 
 class SourceMaps
 {
@@ -38,6 +39,12 @@ class SourceMaps
     private function getMappings()
     {
         return [
+            [
+                'provider_slug' => 'prothomalo',
+                'provider_class' => ProthomAlo::class,
+                'provider_parser' => ParserList::class,
+                'parse_type' => self::PARSE_TYPE_HEADLINE
+            ],
             [
                 'provider_slug' => 'prothomalo-nortamerica-category',
                 'provider_class' => NorthAmericaCategory::class,
