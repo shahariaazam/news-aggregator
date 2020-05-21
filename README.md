@@ -81,6 +81,20 @@ $aggregator->setCache($cache);
 $aggregator->setLogger($logger);
 ```
 
+### Docker Image
+You can also fetch news from your favorite source or read news from Docker container. To run your Docker container, write the following command -
+
+```bash
+docker run -it --rm shaharia/news-aggregator php ./bin/news news:headlines --list {NEWS_PROVIDER_SOURCE_SLUG} --json --with-url
+```
+
+### News Provider Slug
+Run the following commands to see all the slugs of news provider.
+
+```bash
+php ./bin/news news:sources --list
+```
+
 ### Available News Sources
 - BBC (International from UK) - `Lists`
 - The Daily ProthomAlo (Bangladeshi Daily) - `Lists | Details`

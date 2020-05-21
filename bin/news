@@ -1,0 +1,16 @@
+#!/usr/bin/env php
+<?php
+// application.php
+
+require dirname(__DIR__) . DIRECTORY_SEPARATOR . "vendor" . DIRECTORY_SEPARATOR . "autoload.php";
+
+use Shaharia\NewsAggregator\Commands\NewsHeadline;
+use Shaharia\NewsAggregator\Commands\NewsSourceLists;
+use Symfony\Component\Console\Application;
+
+$application = new Application();
+
+$application->add(new NewsSourceLists());
+$application->add(new NewsHeadline());
+
+$application->run();
