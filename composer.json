@@ -9,6 +9,7 @@
     ],
     "require": {
         "php": ">= 7.2",
+        "ext-json": "*",
         "symfony/dom-crawler": "^5.0",
         "symfony/css-selector": "^5.0",
         "pear/net_url2": "^2.2",
