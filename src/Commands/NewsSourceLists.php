@@ -40,7 +40,6 @@ class NewsSourceLists extends Command
     protected function execute(InputInterface $input, OutputInterface $output)
     {
         if ($input->getOption('list')) {
-
             $io = new SymfonyStyle($input, $output);
             $io->title("List of News Sources");
 
@@ -49,7 +48,6 @@ class NewsSourceLists extends Command
         }
 
         if ($input->getOption('show')) {
-
             $io = new SymfonyStyle($input, $output);
             $io->title("Detail of News Source");
 
