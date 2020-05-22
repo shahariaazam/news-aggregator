@@ -16,11 +16,12 @@ use Symfony\Component\Console\Input\InputDefinition;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
+use Symfony\Component\Console\Style\SymfonyStyle;
 
 class NewsSourceLists extends Command
 {
     // the name of the command (the part after "bin/console")
-    protected static $defaultName = 'news:sources';
+    protected static $defaultName = 'sources';
 
     protected function configure()
     {
@@ -29,8 +30,8 @@ class NewsSourceLists extends Command
             ->setDescription('Command about news sources')
             ->setDefinition(
                 new InputDefinition([
-                    new InputOption('list', 'l', InputOption::VALUE_NONE),
-                    new InputOption('show', 's', InputOption::VALUE_REQUIRED)
+                    new InputOption('list', 'l', InputOption::VALUE_NONE, 'List of available news sources'),
+                    new InputOption('show', 's', InputOption::VALUE_REQUIRED, 'Show details about specific news source')
                 ])
             );
         ;
@@ -39,11 +40,17 @@ class NewsSourceLists extends Command
     protected function execute(InputInterface $input, OutputInterface $output)
     {
         if ($input->getOption('list')) {
+            $io = new SymfonyStyle($input, $output);
+            $io->title("List of News Sources");
+
             $this->listSourcesAsTable($output);
             return 0;
         }
 
         if ($input->getOption('show')) {
+            $io = new SymfonyStyle($input, $output);
+            $io->title("Detail of News Source");
+
             $this->sourceDetails($input, $output);
         }
 

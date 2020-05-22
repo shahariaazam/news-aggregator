@@ -19,7 +19,7 @@ use Symfony\Component\Console\Output\OutputInterface;
 class NewsHeadline extends Command
 {
     // the name of the command (the part after "bin/console")
-    protected static $defaultName = 'news:headlines';
+    protected static $defaultName = 'headlines';
 
     protected function configure()
     {
@@ -28,7 +28,7 @@ class NewsHeadline extends Command
             ->setDescription('Show headlines of news')
             ->setDefinition(
                 new InputDefinition([
-                    new InputOption('list', 'l', InputOption::VALUE_REQUIRED, 'Show list of headline'),
+                    new InputOption('source', 's', InputOption::VALUE_REQUIRED, 'Source of the news'),
                     new InputOption('with-url', 'u', InputOption::VALUE_NONE, 'With news URL'),
                     new InputOption('json', 'j', InputOption::VALUE_NONE, 'Output in JSON format')
                 ])
@@ -37,8 +37,8 @@ class NewsHeadline extends Command
 
     protected function execute(InputInterface $input, OutputInterface $output)
     {
-        if ($input->getOption('list')) {
-            $providerSlug = $input->getOption('list');
+        if ($input->getOption('source')) {
+            $providerSlug = $input->getOption('source');
 
             $sourceMaps = new SourceMaps();
             $provider = $sourceMaps->getHeadLineProviderBySlug($providerSlug);
